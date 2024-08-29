@@ -1,0 +1,10 @@
+FROM node:lts-alpine
+
+WORKDIR /app
+COPY package*.json ./
+RUN yarn install
+COPY . .
+EXPOSE 3000
+CMD yarn build
+ENV NODE_ENV=production
+RUN yarn start
