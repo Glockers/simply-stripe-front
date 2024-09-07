@@ -1,13 +1,7 @@
-import { server } from "@/utils/axios";
+"use server";
+import { cookies } from "next/headers";
 import { DashboardPage } from "./dashboard";
 
 export default async function Dashboard() {
-  const result = await server
-    .get("/subscription/access")
-    .then((e) => e.data)
-    .catch((err) => {
-      return [];
-    });
-
-  return <DashboardPage plans={result} />;
+  return <DashboardPage />;
 }

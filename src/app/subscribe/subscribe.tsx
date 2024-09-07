@@ -4,7 +4,7 @@ import CheckoutForm from "./form";
 import { Elements } from "@stripe/react-stripe-js";
 import { useSearchParams } from "next/navigation";
 
-export default function SubscribtionPage() {
+export function SubscribtionPage() {
   const searchParams = useSearchParams();
   const clientSecret = searchParams.get("clientSecret");
 

@@ -1,5 +1,5 @@
-import SubscribtionPage from "./subscribe";
+import { SubscribtionPage } from "./subscribe";
 
-export default function Subscribtion() {
+export default function Subscribe() {
   return <SubscribtionPage />;
 }

@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/Button";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -47,24 +48,29 @@ const CheckoutForm = ({ clientSecret }: Props) => {
 
   return (
     <>
-      <h1>Заполните данные банковской карты</h1>
+      <h1 className="text-2xl font-bold mb-4">
+        Заполните данные банковской карты
+      </h1>
 
-      <p>
-        The successful test card: <span>4242424242424242</span>.
+      <p className="mb-6 text-gray-600">
+        The successful test card:{" "}
+        <span className="font-semibold">4242424242424242</span>.
       </p>
 
-      <form onSubmit={handleSubmit}>
-        <label>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <label className="block text-lg font-medium">
           Full name
           <input
             type="text"
             id="name"
+            className="mt-2 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
             onChange={(e) => setName(e.target.value)}
           />
         </label>
 
-        <div className="w-[600px] mt-10">
+        <div className="w-[400px] mt-6">
           <CardElement
+            className="p-3 border border-gray-300 rounded-md shadow-sm"
             options={{
               style: {
                 base: {
@@ -84,7 +90,9 @@ const CheckoutForm = ({ clientSecret }: Props) => {
           />
         </div>
 
-        <button>Подписаться</button>
+        <Button className="mt-6 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+          Подписаться
+        </Button>
 
         <div>{messages}</div>
       </form>

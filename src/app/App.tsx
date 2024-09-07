@@ -3,9 +3,11 @@
 import React, { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { server } from "@/utils/axios";
+import { Button } from "@/components/Button";
 
 export default function App() {
   const [email, setEmail] = useState("glockerswork@gmail.com");
+  const [message, setMessage] = useState("");
   const navigate = useRouter();
 
   async function handleRegister(e: FormEvent) {
@@ -19,6 +21,7 @@ export default function App() {
       navigate.push("/plan");
     } catch (error) {
       console.error(error);
+      setMessage("Ошибка регистрации в приложение");
     }
   }
 
@@ -35,13 +38,14 @@ export default function App() {
       navigate.replace("/plan");
     } catch (error) {
       console.error(error);
+      setMessage("Ошибка входа в приложение");
     }
   }
 
   return (
     <div>
       <h1>Вход в систему</h1>
-
+      {message ? message : <></>}
       <form onSubmit={handleRegister}>
         <label>
           Email
@@ -56,20 +60,12 @@ export default function App() {
         </label>
 
         <div className="flex gap-4">
-          <button
-            className="bg-slate-400 rounded-lg p-3"
-            type="submit"
-            onClick={handleRegister}
-          >
+          <Button type="submit" onClick={handleRegister}>
             Регистрация
-          </button>
-          <button
-            className="bg-slate-400 rounded-lg p-3"
-            type="button"
-            onClick={handleSignIn}
-          >
+          </Button>
+          <Button type="button" onClick={handleSignIn}>
             Войти
-          </button>
+          </Button>
         </div>
       </form>
     </div>

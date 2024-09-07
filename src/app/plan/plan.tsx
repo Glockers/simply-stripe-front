@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/Button";
 import { server } from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -23,18 +24,22 @@ export function PlanPage({ prices }: Props) {
     }
 
     try {
-      const { subscriptionId, clientSecret } = await server
+      const request = await server
         .post("/subscription", {
           priceId,
         })
         .then((r) => r.data);
 
+      if (!request) {
+        return setErrMessage("У вас уже есть подписка на это план");
+      }
+
       router.push(
-        `/subscribe?from=${encodeURIComponent(
-          currentPath
-        )}&subscriptionId=${subscriptionId}&clientSecret=${clientSecret}`
+        `/subscribe?from=${encodeURIComponent(currentPath)}&clientSecret=${
+          request.clientSecret
+        }`
       );
-    } catch (err: any) {
+    } catch (err) {
       console.log(err);
       setErrMessage("Возникла непредвиденная ошибка");
     }
@@ -42,7 +47,9 @@ export function PlanPage({ prices }: Props) {
 
   return (
     <div>
-      <h1>Выберите план</h1>
+      <h1 className="mb-10 text-center text-red-500 mt-10 text-4xl">
+        Каталог планов
+      </h1>
 
       <p>{errMessage ?? ""}</p>
       <div className="flex gap-20">
@@ -51,12 +58,9 @@ export function PlanPage({ prices }: Props) {
             <div key={id}>
               id: {id}
               <br />
-              <button
-                className="bg-slate-400 rounded-lg p-3"
-                onClick={() => createSubscription(id)}
-              >
+              <Button onClick={() => createSubscription(id)}>
                 Подписаться
-              </button>
+              </Button>
             </div>
           );
         })}
